@@ -7,20 +7,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.harjoitustyo.bookstore.domain.Book;
+import com.harjoitustyo.bookstore.model.Book;
+import com.harjoitustyo.bookstore.model.BookRepository;
+
 
 
 @Controller
 
 public class BookController {
 
-     public static List<Book> books = new ArrayList<>();
+    private BookRepository bookRepository;
 
-    @GetMapping("/index")
-    public String showBooks(Model model) {
-        model.addAttribute("books", books);
-        return "books";
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository=bookRepository;
     }
+
+    @GetMapping("/booklist")
+    public String getAllBooks(Model model) {
+        model.addAttribute("books", bookRepository.findAll());
+        return "booklist";
+    }
+
+    @GetMapping("add")
+    public String openAddBookForm(Model model) {
+        model.addAttribute("kirja", new Book());
+        return "addBook";
+    }
+    
     
 
 }

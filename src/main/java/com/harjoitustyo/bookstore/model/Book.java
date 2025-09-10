@@ -1,11 +1,22 @@
-package com.harjoitustyo.bookstore.domain;
+package com.harjoitustyo.bookstore.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Book {
-    public String title;
-    public String author;
-    public int publicationYear;
-    public String isbn;
-    public double price;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String title;
+    private String author;
+    private int publicationYear;
+    private String isbn;
+    private double price;
+    
 
     public Book() {
 
@@ -16,7 +27,11 @@ public class Book {
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+        
     }
+     public Long getId() {
+        return id;
+     }
      public String getTitle() {
          return title;
      }
@@ -47,7 +62,12 @@ public class Book {
      public void setPrice(double price) {
          this.price = price;
      }
+     @Override
+     public String toString() {
+        return "Book [id= " + id + ", title= " + title + ", author= " + author + ", Year= " + publicationYear + "Isbn= " + isbn + ", Price=" + price +"]";
+     }
 
     
     
 }
+
