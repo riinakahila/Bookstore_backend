@@ -3,33 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Strore</title>
+     <link type="text/css" rel="stylesheet"
+          href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
 </head>
-<body>
-    <div>
-    <h1>Books</h1>
-    </div>
-
-    <div>
-    <table>
+<body class="container mt-4">
+    <h1 class="mb-4">Books</h1>
+    
+    <table class="table table-striped">
+        <thead class="table-dark">
     <tr>
-        <th>Author</th>
         <th>Title</th>
+        <th>Author</th>
         <th>ISBN</th>
         <th>Year</th>
     </tr>
+    </thead>
+    <tbody>
    <tr th:each="book : ${books}">
-    <td th:text="${book.author}"></td>
+    <td th:text="${book.id}"></td>
     <td th:text="${book.title}"></td>
+    <td th:text="${book.author}"></td>
     <td th:text="${book.isbn}"></td>
     <td th:text="${book.publicationYear}"></td>
     <td>
+        <a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a>
         <a th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
     </td>
     </tr>
+    </tbody>
 </table>
-</div>
-    <div>
-    <a href="/addbook">Add book</a>
-    </div>
+    <a href="/addbook" class="btn btn-success">Add book</a>
 </body>
 </html>
