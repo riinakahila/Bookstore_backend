@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Book</title>
+    <link type="text/css" rel="stylesheet"
+          href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
     <h1>Add new book to list</h1>
@@ -29,7 +32,7 @@
             <input type="number" step="0.01" th:field="*{price}" />
         </div>
         
-        <input type="submit" value="Save"></input>
+        <input type="submit" class="btn btn-success" value="Save"></input>
     </form>
 
     <a href="/booklist">Back to Booklist</a>

@@ -1,9 +1,9 @@
 package com.harjoitustyo.bookstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 
 
@@ -14,22 +14,40 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
    
+    @NotEmpty(message = "Book's title cannot be empty")
+    @Size(min = 1, max = 250)
     private String title;
+
+    @NotEmpty(message  = "Authors name cannot be empty")
+    @Size(min = 1, max = 250)
     private String author;
+
+    @Min(value = 0, message = "Year cannot be empty or negative")
     private int publicationYear;
+
+    @NotEmpty(message = "ISBN cannot be empty")
+    @Size(min = 1, max = 20)
     private String isbn;
+
+    @Min(value = 0, message= "Price cannot be empty or negative")
     private double price;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryid")
+    private Category category;
     
 
     public Book() {
 
     }
-     public Book(String title, String author, int publicationYear, String isbn, double price) {
+     public Book(String title, String author, int publicationYear, String isbn, double price, Category category) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+        this.category = category;
+
         
     }
      public Long getId() {
@@ -65,9 +83,15 @@ public class Book {
      public void setPrice(double price) {
          this.price = price;
      }
+     public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
      @Override
      public String toString() {
-        return "Book [id= " + id + ", title= " + title + ", author= " + author + ", Year= " + publicationYear + "Isbn= " + isbn + ", Price=" + price +"]";
+        return "Book [id= " + id + ", title= " + title + ", author= " + author + ", Year= " + publicationYear + "Isbn= " + isbn + ", Price=" + price +" , Category=" + category.getName() + "]";
      }
 
     

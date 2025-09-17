@@ -7,18 +7,18 @@
           href="/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}" />
 </head>
-<body class="container mt-4">
-    <h1 class="mb-4">Books</h1>
+<body>
+    <h1>Books</h1>
     
     <table class="table table-striped">
-        <thead class="table-dark">
     <tr>
+        <th>ID</th>
         <th>Title</th>
         <th>Author</th>
         <th>ISBN</th>
         <th>Year</th>
+        <th>Category</th>
     </tr>
-    </thead>
     <tbody>
    <tr th:each="book : ${books}">
     <td th:text="${book.id}"></td>
@@ -26,9 +26,10 @@
     <td th:text="${book.author}"></td>
     <td th:text="${book.isbn}"></td>
     <td th:text="${book.publicationYear}"></td>
+    <td th:text="${book.category.name}"></td>
     <td>
         <a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a>
-        <a th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
+        <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
     </td>
     </tr>
     </tbody>

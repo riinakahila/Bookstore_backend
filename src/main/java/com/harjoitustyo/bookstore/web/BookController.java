@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.harjoitustyo.bookstore.model.Book;
 import com.harjoitustyo.bookstore.model.BookRepository;
+
+import jakarta.validation.Valid;
 
 
 
@@ -56,11 +59,19 @@ public class BookController {
     public String editBook(@PathVariable Long id, Model model){
         log.info("Edit book which id:" + id);
         model.addAttribute("editBook", bookRepository.findById(id));
-        return "editBook"; 
+        return "editBookWithValidation"; 
     }
     @PostMapping("/saveEditedBook")
-    public String saveEditedBook(Book book) {
+    public String saveEditedBook(@Valid @ModelAttribute("editBook")Book book, BindingResult bindingResult, Model model) {
         log.info("CONTROLLER: Save edited book " + book);
+
+        if (bindingResult.hasErrors()){
+            log.error("some validation error happened, book: " + book);
+            model.addAttribute("editBook", book);
+
+            return "editBookWithValidation";
+        }
+        log.info("save book: " + book);
         bookRepository.save(book);
         return "redirect:/booklist";
 }
