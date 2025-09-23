@@ -38,7 +38,7 @@ public class BookstoreApplication {
         categoryRepository.save(kategoria2);
 		//lisätty pari kirjaa
 		Book book1 = new Book("Kirjan nimi", "kirjailija", 2025, "Isbn1111", 30, kategoria1);
-		Book book2 = new Book("Kirjan nimi2", " eri kirjailija", 2000, "123456", 50.99, kategoria2);
+		Book book2 = new Book("Kirjan nimi2", "eri kirjailija", 2000, "123456", 50.99, kategoria2);
 	    //tallennetaan kirjat h2-kantaan
 		bookRepository.save(book1);
 		bookRepository.save(book2);

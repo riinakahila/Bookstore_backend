@@ -2,6 +2,7 @@ package com.harjoitustyo.bookstore.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.harjoitustyo.bookstore.model.Book;
 import com.harjoitustyo.bookstore.model.BookRepository;
+import com.harjoitustyo.bookstore.model.CategoryRepository;
 
 import jakarta.validation.Valid;
 
@@ -24,9 +26,11 @@ public class BookController {
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository=bookRepository;
+        this.categoryRepository=categoryRepository;
     }
 
     @GetMapping("/booklist")
@@ -39,6 +43,7 @@ public class BookController {
     @GetMapping("/addbook")
     public String openAddBookForm(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addbook";
     }
     
@@ -55,10 +60,12 @@ public class BookController {
         bookRepository.deleteById(id);
         return "redirect:/booklist";
     }
+
     @GetMapping("/editBook/{id}")
     public String editBook(@PathVariable Long id, Model model){
         log.info("Edit book which id:" + id);
         model.addAttribute("editBook", bookRepository.findById(id));
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editBookWithValidation"; 
     }
     @PostMapping("/saveEditedBook")
@@ -68,6 +75,7 @@ public class BookController {
         if (bindingResult.hasErrors()){
             log.error("some validation error happened, book: " + book);
             model.addAttribute("editBook", book);
+            model.addAttribute("categories", categoryRepository.findAll());
 
             return "editBookWithValidation";
         }

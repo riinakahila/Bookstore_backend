@@ -3,12 +3,15 @@ package com.harjoitustyo.bookstore.model;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotEmpty(message = "Category name cannot be empty")
     private String name;
 
 @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
