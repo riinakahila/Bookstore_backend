@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Book store main page</title>
+    <link type="text/css" rel="stylesheet"
+          href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+    <p>Welcome <i><span sec:authentication="name"></span></i> to book store!</p>
+    <p><a href="/booklist">Show list of all books</a></p>
+    <p><a href="/add">Insert a new book</a></p>
+    <br>
+    <p><a href="/categorylist">Show list of all categories</a></p>
+    <p><a href="/addCategory">Insert a new category</a></p>
+
+    <form action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Book Strore</title>
@@ -28,12 +28,17 @@
     <td th:text="${book.publicationYear}"></td>
     <td th:text="${book.category.name}"></td>
     <td>
-        <a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a>
-        <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
+        <td><a th:href="@{/editBook/{id}(id=${book.id})}">Edit</a></td>
+
+        <td sec:authorize ="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a></td>
     </td>
     </tr>
     </tbody>
 </table>
+<a href="/main">Back to main page</a>
     <a href="/addbook" class="btn btn-success">Add book</a>
+    <form action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
 </body>
 </html>
